@@ -60,7 +60,7 @@ def simpleRobCons(Npred, lambd, N):
     if Npred < C1/(A1-A2):
         # Passer dans l'état VEI au temps C1/(lambda(A1-A2)) puis dans l'état OFF au temps 
         # (C2-C1)/(lambda(A2-A3))
-        if N < C1/(lambd*(A1-A2)):
+        if lambd==0 or N < C1/(lambd*(A1-A2)):
             # On n'a pas le temps de passer à l'état VEI
             return A1*N
         if N < (C2-C1)/(lambd*(A2-A3)):
@@ -75,7 +75,7 @@ def simpleRobCons(Npred, lambd, N):
         if N < lambd*C1/((A1-A2)):
             # On n'a pas le temps de passer à l'état VEI
             return A1*N
-        if N < (C2-C1)/(lambd*(A2-A3)):
+        if lambd==0 or N < (C2-C1)/(lambd*(A2-A3)):
             # On a le temps de passer à l'état VEI mais pas à l'état OFF
             return A1 * (lambd*C1/(A1-A2-1)) + A2 * (N - lambd*C1/((A1-A2)) + 1) + C1
         # On a le temps pour passer à l'état VEI puis à l'état OFF
@@ -166,14 +166,13 @@ def simulations():
     Ns_Npred = [(Ns[i], Npreds[i]) for i in range(nbExemples)]
     Ns_Npred.sort(key=lambda vpa: erreur_prediction(vpa[1], vpa[0]))
     
-    lambd = 0.5 #PB a faire varier
     # Définition des points du graphique
     X = [erreur_prediction(p, v) for (v, p) in Ns_Npred]
     #Ratio de compétitibité déterminé par algo / aveugle(N,N) puisque aveugle(N,N) est l'optimum
     Yaveugle = [aveugle(Npred, N) / aveugle(N, N) for (N, Npred) in Ns_Npred]
-    YsimpleRobCons05 = [simpleRobCons(Npred, lambd, N) / aveugle(N, N) for (N, Npred) in Ns_Npred]
-    YsimpleRobCons0 = [simpleRobCons(Npred, lambd, N) / aveugle(N, N) for (N, Npred) in Ns_Npred]
-    YsimpleRobCons1 = [simpleRobCons(Npred, lambd, N) / aveugle(N, N) for (N, Npred) in Ns_Npred]
+    YsimpleRobCons05 = [simpleRobCons(Npred, 0.5, N) / aveugle(N, N) for (N, Npred) in Ns_Npred]
+    YsimpleRobCons0 = [simpleRobCons(Npred, 0, N) / aveugle(N, N) for (N, Npred) in Ns_Npred]
+    YsimpleRobCons1 = [simpleRobCons(Npred, 1, N) / aveugle(N, N) for (N, Npred) in Ns_Npred]
     
     # À partir d'ici, on crée des classes de valeurs comme pour un histogramme, dont on tirera le maximum, 
     # puisque le rapport de compétitivité est calculé en fonction du pire cas des algorithmes
