@@ -1,6 +1,5 @@
 from math import ceil, floor
 import random
-import numpy as np
 from random import randint
 import matplotlib.pyplot as plt
 
@@ -110,7 +109,7 @@ def randomizedRobCons(Npred, lambd, N):
    
 def primalDualSansPred(N):
     """
-    Algorithme randomisé robuste et consistent
+    Algorithme primal-dual sans prédictions
     
     Parameters
     ----------
@@ -154,7 +153,7 @@ def primalDualSansPred(N):
             
 def primalDualAvecPred(Npred, lambd, N):
     """
-    Algorithme randomisé robuste et consistent
+    Algorithme primal-dual avec prédictions
     
     Parameters
     ----------
@@ -267,8 +266,7 @@ def simulations():
 
     Returns
     -------
-    int
-        C PB
+    None
 
     """
     # Tirage aléatoire de N et de Npred
