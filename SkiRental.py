@@ -255,14 +255,7 @@ def simulations():
     
     Parameters
     ----------
-    Npred : int
-            Le nombre de jours de skis prédit.
-            
-    lambd : float
-            L'hyperparamètre de robustesse.
-            
-    N : int
-            Le nombre de jours de skis réél.
+    None
 
     Returns
     -------
@@ -282,7 +275,7 @@ def simulations():
     Ns_Npred = [(Ns[i], Npreds[i]) for i in range(nbExemples)]
     Ns_Npred.sort(key=lambda vpa: erreur_prediction(vpa[1], vpa[0]))
     
-    lambd = 0.5 #PB a faire varier
+    lambd = 0.5 # A faire varier
     # Définition des points du graphique
     X = [erreur_prediction(p, v) for (v, p) in Ns_Npred]
     #Ratio de compétitibité déterminé par algo / simple(N,N) puisque simple(N,N) est l'optimum
